@@ -11,6 +11,7 @@ using std::string;
 class Logger
 {
 public:
+    virtual ~Logger(){}
     virtual string genLog() = 0;
 };
 
@@ -27,6 +28,7 @@ class DecorateLog : public Logger{
 public:
     DecorateLog(Logger *l) : _l(l){}
     string genLog();
+    ~DecorateLog(){delete _l;}
 private:
     Logger *_l;
 };

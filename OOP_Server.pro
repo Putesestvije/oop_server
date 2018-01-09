@@ -6,7 +6,9 @@ CONFIG -= qt
 SOURCES += main.cpp \
     config.cpp \
     logger.cpp \
-    server.cpp
+    server.cpp \
+    connection.cpp \
+    logging.cpp
 
 HEADERS += \
     config.h \
@@ -14,7 +16,8 @@ HEADERS += \
     logging.h \
     log_levels.h \
     logger.h \
-    server.h
+    server.h \
+    connection.h
 
 DISTFILES += \
     ../build-OOP_Server-Desktop_Qt_5_10_0_GCC_64bit-Debug/server.conf
