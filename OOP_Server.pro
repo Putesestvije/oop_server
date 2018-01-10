@@ -8,7 +8,9 @@ SOURCES += main.cpp \
     logger.cpp \
     server.cpp \
     connection.cpp \
-    logging.cpp
+    logging.cpp \
+    requesthandler.cpp \
+    gethandler.cpp
 
 HEADERS += \
     config.h \
@@ -17,7 +19,10 @@ HEADERS += \
     log_levels.h \
     logger.h \
     server.h \
-    connection.h
+    connection.h \
+    request.h \
+    requesthandler.h \
+    gethandler.h
 
 DISTFILES += \
     ../build-OOP_Server-Desktop_Qt_5_10_0_GCC_64bit-Debug/server.conf

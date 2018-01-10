@@ -15,6 +15,9 @@ int main(int argc, char** argv)
     std::cout << "Hello World!" << std::endl;
 
     Server server;
+    server.serve();
+
+
     //TODO
     /* napraviti request strukturu/klasu; napraviti upravljac zahtevom
      * kroz factory metodu/ mozda cak abstract request factory, koji daje

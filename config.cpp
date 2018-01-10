@@ -121,7 +121,6 @@ void Config::parseLine(std::string &line)
 
     eqPos = line.find('=');
 
-
     if(eqPos != std::string::npos){
         /**althought unrecognized options are not a mistake
          * only those set during default initiation will be
