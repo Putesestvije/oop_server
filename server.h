@@ -11,10 +11,11 @@ public:
     Server();
     void serve();
     static void handleChild(int sig);
-    std::shared_ptr<RequestHandler> makeHandler(Request r, Connection *c, int cons);
+    std::unique_ptr<RequestHandler> makeHandler(Request r, Connection *c, int cons, std::string fifo);
 
     ~Server();
 private:
+    std::string makeNewsChannel();
 
     Connection *_connection;
 };
