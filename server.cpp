@@ -11,8 +11,8 @@
 
 void Server::handleChild(int sig)
 {
-    MYLOG(MYLOG_TRACE_FUN_LVL, "enter: ")
-    MYLOG(MYLOG_TRACE_FUN_LVL, __PRETTY_FUNCTION__)
+    //MYLOG(MYLOG_TRACE_FUN_LVL, "enter: ")
+    //MYLOG(MYLOG_TRACE_FUN_LVL, __PRETTY_FUNCTION__)
     struct sigaction siga;
 
     siga.sa_handler = &Server::handleChild;
@@ -20,15 +20,20 @@ void Server::handleChild(int sig)
     siga.sa_flags = 0 | SA_NODEFER | SA_NOCLDWAIT;
 
     sigaction(SIGCHLD, &siga, nullptr);
-    MYLOG(MYLOG_TRACE_FUN_LVL, "exit: handleChild")
+    //MYLOG(MYLOG_TRACE_FUN_LVL, "exit: handleChild")
 }
 
-std::shared_ptr<RequestHandler> Server::makeHandler(Request r)
+std::shared_ptr<RequestHandler> Server::makeHandler(Request r, Connection *c, int cons)
 {
     size_t blank = r.req.find(' ');
 
     if (r.req.substr(0,blank) == "GET"){
-        auto res = std::shared_ptr<GETHandler>(new GETHandler(r));
+        /*std::shared_ptr<GETHandler> res;
+        GETHandler g = GETHandler(r, c);
+        res = std::make_shared<GETHandler>(g);
+        return res;*/
+
+        auto res = std::shared_ptr<GETHandler>(new GETHandler(r, c, cons));
         return res;
     }
 }
@@ -47,13 +52,19 @@ void Server::serve()
 {
     MYLOG(MYLOG_TRACE_FUN_LVL, "enter Server::serve")
     Request req;
+    int cons = 0;
     while (1) {
+        cons++;
         _connection->recvRequest(req);
+        MYLOG(MYLOG_TRACE_LVL, "Recieved a new request")
         //std::cout << "recieved request" << std::endl;
         if (fork() == 0){
-            std::shared_ptr<RequestHandler> handler = makeHandler(req);
+            std::shared_ptr<RequestHandler> handler = makeHandler(req, _connection, cons);
             handler->HandleRequest();
             exit(1);
+        }
+        else {
+            close(req.clientSocket);
         }
     }
 }

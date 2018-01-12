@@ -11,7 +11,7 @@ public:
     Server();
     void serve();
     static void handleChild(int sig);
-    std::shared_ptr<RequestHandler> makeHandler(Request r);
+    std::shared_ptr<RequestHandler> makeHandler(Request r, Connection *c, int cons);
 
     ~Server();
 private:
